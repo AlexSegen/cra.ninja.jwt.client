@@ -3,7 +3,8 @@ import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from "../actions
 const initialState = {
     loading: false,
     user: null,
-    error: null
+    error: null,
+    success: false
 }
 
 export const registerReducer = (state = initialState, action) => {
@@ -17,8 +18,7 @@ export const registerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                isAuthenticated: true,
-                user: action.payload,
+                success: true,
                 error: null
             }
         case REGISTER_FAILURE:

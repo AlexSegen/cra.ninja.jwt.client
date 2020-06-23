@@ -5,19 +5,20 @@ import Register from '../store/actions/register';
 import validators from '../helpers/validators';
 
 import Layout from '../components/Layout';
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
 
     const initialUser = { first_name: "",  last_name: "", email: "", password: "" };
 
     const dispatch = useDispatch();
-    const {loading, error} = useSelector(state => state.register);
+    const {loading, error, success} = useSelector(state => state.register);
 
     const [user, setUser] = useState(initialUser)
     const [invalidPayload, setInvalidPayload] = useState(null);
     
     const submit = () => {
-        dispatch(Register(user));
+        dispatch(Register(user))
     }
     
     const handleSubmit = async (e) => {
@@ -108,6 +109,10 @@ const SignUp = () => {
                       <input className="form-control" type="password" placeholder="Password" name="password" onChange={handleChange} disabled={loading}/>
                     </div>
                   </div>
+
+                    {
+                        success && <div className="alert text-success p-2">Your account has been created Please, <Link to="/login">Sign In</Link></div>
+                    }
                   
                     {
                         error && <div className="alert text-danger p-2">{error}</div>

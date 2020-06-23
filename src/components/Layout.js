@@ -2,15 +2,16 @@ import React from 'react';
 import Header from './shared/header';
 import Footer from './shared/footer';
 
-import '../assets/scss/main.scss'
+import '../assets/css/nucleo-icons.css'
+import '../assets/scss/argon-design-system.scss'
 
-const Layout = ({children}) => {
+const Layout = ({children, location}) => {
     return ( 
         <>
         <Header/>
-        <main className="container">
-            {children}
-        </main>
+            <main className="wrapper">
+                {children}
+            </main>
         <Footer/>
         </>
      );

@@ -1,5 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
+import PageHeader from '../components/page-header';
+
 import {useAuth} from '../helpers/auth';
 
 const Badge = ({granted}) => {
@@ -16,14 +18,14 @@ const Private = () => {
     
     return ( 
         <Layout>
-            <div className="text-left">
-                <h1>Private</h1>
+            <PageHeader title="Private"/>
+            <div className="container py-5">
                 <p>Hello, <strong>{first_name} {last_name}</strong>.</p>
                 <p>This is your private section.</p>
 
                 <hr/>
                 
-                <h4>Your permissions:</h4>
+                <h4>Permissions:</h4>
 
                 <h5 className="mt-4">Notes</h5>
                 <div className="pl-3">

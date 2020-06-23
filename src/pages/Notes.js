@@ -2,6 +2,7 @@ import React from 'react';
 import { useAuth } from '../helpers/auth';
 
 import Layout from '../components/Layout';
+import PageHeader from '../components/page-header';
 import NotesList from '../components/NotesList';
 const Notes = () => {
 
@@ -9,21 +10,24 @@ const Notes = () => {
 
     return checkPermissions('notes:read') ? ( 
         <Layout>
-            <div className="text-left">
-                <h1>Notes</h1>
-                <p>This is the Notes Page.</p>
-                
-                {
-                    checkPermissions('notes:create') && <button type="button" className="btn btn-success">Create note</button>
-                }
-                
-                <br/><br/>
+            <PageHeader title="Notes"/>
+            <div className="container py-5">
+                <div className="row">
+                    <div className="col-sm-10">
+                        <p>This is the Notes Page.</p>
+                    </div>
+                    <div className="col-sm-auto">
+                        {
+                            checkPermissions('notes:create') && <button type="button" className="btn btn-success">Create note</button>
+                        }
+                    </div>
+                </div>
                 <NotesList/>
             </div>
         </Layout>
      ) : (
         <Layout>
-            <div className="text-center">
+            <div className="container py-5">
                 <h1>Not Authorized</h1>
                 <p>You don't have permissions to see page.</p>
             </div>

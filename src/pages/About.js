@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { increment, decrement } from '../store/actions'
 
 import Layout from '../components/Layout';
+import PageHeader from '../components/page-header';
 
 const About = () => {
 
@@ -12,8 +13,8 @@ const About = () => {
 
     return ( 
         <Layout>
-            <div className="text-center">
-                <h1>About</h1>
+            <PageHeader title="About"/>
+            <div className="container py-5">
                 <p>This is the About Page.</p>
                 <p>Counter is at: {counter}</p>
                 <button onClick={() => dispatch(increment(5))} type="button">+</button>

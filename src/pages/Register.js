@@ -20,7 +20,9 @@ const SignUp = () => {
         dispatch(Register(user));
     }
     
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
         
         setInvalidPayload(null);
         
@@ -50,49 +52,80 @@ const SignUp = () => {
         });
     }
 
-    const styles = {
-        textAlign: "center",
-        maxWidth: "300px",
-        margin: "100px auto"
-    }
 
     return ( 
         <Layout>
-            
-            {
-                <div className="text-center" style={styles}>
-                    <h1>Register</h1>
-                    <p>This is the Register Page.</p>
-                    <div className="text-left">
-                        <div className="form-group">
-                            <label htmlFor="first_name">First Name</label>
-                            <input className="form-control" type="text" name="first_name" onChange={handleChange} disabled={loading}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="last_name">Last Name</label>
-                            <input className="form-control" type="text" name="last_name" onChange={handleChange} disabled={loading}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input className="form-control" type="email" name="email" onChange={handleChange} disabled={loading}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input className="form-control" type="password" name="password" onChange={handleChange} disabled={loading}/>
-                        </div>
-                        {
-                            error && <div className="alert text-danger">{error}</div>
-                        }
-                        {
-                            invalidPayload && <div className="alert text-danger">{invalidPayload}</div>
-                        }
-                        <div className="form-group">
-                            <button onClick={handleSubmit} type="button" className="btn btn-primary" disabled={loading}>{loading ? 'Loading...':'Register'}</button>
-                        </div>
-                    </div>
+
+    <section className="section section-shaped section-lg">
+      <div className="shape shape-style-1 bg-gradient-default">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="container pt-lg-7">
+        <div className="row justify-content-center">
+          <div className="col-lg-5">
+            <div className="card bg-secondary shadow border-0">
+              <div className="card-body px-lg-5 py-lg-5">
+                <div className="text-center text-muted mb-4">
+                  <small>Sign up with credentials</small>
                 </div>
-            }
-            
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <div className="input-group input-group-alternative mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
+                      </div>
+                      <input className="form-control" type="text" name="first_name" placeholder="First name" onChange={handleChange} disabled={loading}/>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="input-group input-group-alternative mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="ni ni-hat-3"></i></span>
+                      </div>
+                      <input className="form-control" type="text" name="last_name" placeholder="Last name" onChange={handleChange} disabled={loading}/>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="input-group input-group-alternative mb-3">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="ni ni-email-83"></i></span>
+                      </div>
+                      <input className="form-control" type="email" name="email" placeholder="Email" onChange={handleChange} disabled={loading}/>
+                    </div>
+                  </div>
+                  <div className="form-group focused">
+                    <div className="input-group input-group-alternative">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
+                      </div>
+                      <input className="form-control" type="password" placeholder="Password" name="password" onChange={handleChange} disabled={loading}/>
+                    </div>
+                  </div>
+                  
+                    {
+                        error && <div className="alert text-danger p-2">{error}</div>
+                    }
+                    {
+                        invalidPayload && <div className="alert text-danger p-2">{invalidPayload}</div>
+                    }
+
+                  <div className="text-center">
+                    <button type="submit" className="btn btn-primary mt-4" disabled={loading}>{loading ? 'Loading...':'Create account'}</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
         </Layout>
      );
 }

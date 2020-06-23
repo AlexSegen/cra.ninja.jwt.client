@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Private from './pages/Private';
+import Profile from './pages/Profile';
 
 import Login from  './pages/Login';
 import Register from  './pages/Register';
@@ -35,6 +36,9 @@ const MainRouter = () => {
           </PrivateRoute>
           <PrivateRoute path="/private">
             <Private />
+          </PrivateRoute>
+          <PrivateRoute path="/profile">
+            <Profile />
           </PrivateRoute>
           <NoAuthOnlyRoute path="/login">
             <Login />

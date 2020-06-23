@@ -35,6 +35,10 @@ const getNotes = (note) => {
       dispatch(getNotesSuccess(response.data));
 
     }).catch(err => {
+        if(err.response) {
+          dispatch(getNotestFailure(err.response.data.message));
+          return;  
+        }
         dispatch(getNotestFailure(err.message));
     });
 

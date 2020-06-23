@@ -17,9 +17,9 @@ const NotesList = () => {
 
     if(loading)
         return <>Loading notes...</>
-
     if(error)
-        return <>{error}</>
+        return <div className="alert text-danger">{error}</div>
+    
 
     return notes && notes.length > 0 ? (
     <>

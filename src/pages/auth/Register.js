@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Register from '../store/actions/register';
+import Register from '../../store/actions/register';
 
-import validators from '../helpers/validators';
+import validators from '../../helpers/validators';
 
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
 
 const SignUp = () => {

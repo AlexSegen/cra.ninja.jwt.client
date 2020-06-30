@@ -14,10 +14,12 @@ import NotFound from './pages/NotFound';
 import Private from './pages/Private';
 import Profile from './pages/Profile';
 
-import Login from  './pages/Login';
-import Register from  './pages/Register';
+import Login from  './pages/auth/Login';
+import Register from  './pages/auth/Register';
+import ForgotAccount from  './pages/auth/ForgotAccount';
 import Notes from "./pages/Notes";
 import Users from "./pages/Users";
+import RestoreAccont from "./pages/auth/RestoreAccont";
 
 const MainRouter = () => {
   return (
@@ -46,6 +48,12 @@ const MainRouter = () => {
           </PrivateRoute>
           <NoAuthOnlyRoute path="/login">
             <Login />
+          </NoAuthOnlyRoute>
+          <NoAuthOnlyRoute path="/forgot-account">
+            <ForgotAccount />
+          </NoAuthOnlyRoute>
+          <NoAuthOnlyRoute path="/reset-password">
+            <RestoreAccont />
           </NoAuthOnlyRoute>
           <NoAuthOnlyRoute path="/register">
             <Register />

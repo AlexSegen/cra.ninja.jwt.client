@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Auth from '../store/actions/auth';
+import Auth from '../../store/actions/auth';
 
-import validators from '../helpers/validators';
+import validators from '../../helpers/validators';
 
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';
 
 const Login = () => {
@@ -92,10 +92,10 @@ const Login = () => {
           </div>
           <div className="row mt-3">
             <div className="col-6">
-              <Link to="/" className="text-light"><small>Forgot password?</small></Link>
+              <Link to="/forgot-account" className="text-light"><small>Forgot password?</small></Link>
             </div>
             <div className="col-6 text-right">
-              <Link to="/" className="text-light"><small>Create new account</small></Link>
+              <Link to="/register" className="text-light"><small>Create new account</small></Link>
             </div>
           </div>
         </div>

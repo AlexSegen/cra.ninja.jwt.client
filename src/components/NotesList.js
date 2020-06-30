@@ -15,14 +15,17 @@ const NotesList = () => {
         dispatch(getNotes())
     }, []);
 
-    if(loading)
-        return <>Loading notes...</>
-
-    if(error)
-        return <>{error}</>
 
     return notes && notes.length > 0 ? (
     <>
+
+        {
+            error && <div className="alert text-danger text-center p-2">{error}</div>
+        }
+
+        {
+            loading && <div className="alert text-info text-center p-2">Loading data...</div>
+        }
 
         <table className="table table-hover table-borderless">
         <thead>

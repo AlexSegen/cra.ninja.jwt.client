@@ -9,7 +9,7 @@ import { useAuth } from '../../helpers/auth';
 const Header = () => {
 
     const dispatch = useDispatch();
-    const {checkPermissions, user, isAuthenticated} = useAuth();
+    const {checkPermissions, user, isAuthenticated, isAdmin} = useAuth();
 
     const SignOut  = async () => {
         dispatch(logout())
@@ -97,6 +97,20 @@ const Header = () => {
                     </Link>
                     </li>
 
+                </>
+                }
+
+                {
+                isAuthenticated && isAdmin && <>
+                    <li className="nav-item dropdown">
+                        <a href="#!" className="nav-link" data-toggle="dropdown" >
+                          <i className="ni ni-collection d-lg-none"></i>
+                          <span className="nav-link-inner--text">Administrator</span>
+                        </a>
+                        <div className="dropdown-menu">
+                          <Link to="/admin/users" className="dropdown-item">Users</Link>
+                        </div>
+                    </li>
                 </>
                 }
 

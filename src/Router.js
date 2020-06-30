@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import Login from  './pages/Login';
 import Register from  './pages/Register';
 import Notes from "./pages/Notes";
+import Users from "./pages/Users";
 
 const MainRouter = () => {
   return (
@@ -34,6 +35,9 @@ const MainRouter = () => {
           <PrivateRoute path="/notes">
             <Notes />
           </PrivateRoute>
+          <AdminRoute path="/admin/users">
+            <Users/>
+          </AdminRoute>
           <PrivateRoute path="/private">
             <Private />
           </PrivateRoute>
@@ -68,6 +72,29 @@ function PrivateRoute({ children, ...rest }) {
           <Redirect
             to={{
               pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
+  );
+}
+
+function AdminRoute({ children, ...rest }) {
+  
+  const { isAuthenticated, user } = useSelector(state => state.auth);
+  
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        isAuthenticated && user.role === "admin" ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
               state: { from: location }
             }}
           />

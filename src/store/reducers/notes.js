@@ -1,4 +1,4 @@
-import { NOTES_REQUEST, NOTES_SUCCESS, NOTES_FAILURE } from "../actions/notes"
+import { NOTES_REQUEST, NOTES_SUCCESS, NOTES_FAILURE, CREATE_NOTE_SUCCESS, CREATE_NOTE_FAILURE } from "../actions/notes"
 
 const initialState = {
     loading: false,
@@ -25,6 +25,19 @@ export const notesReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 notes: [],
+                error: action.payload
+            }
+        case CREATE_NOTE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                notes: [...state.notes, action.payload],
+                error: null
+            }
+        case CREATE_NOTE_FAILURE:
+            return {
+                ...state,
+                loading: false,
                 error: action.payload
             }
         default:

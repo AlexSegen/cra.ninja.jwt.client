@@ -4,6 +4,7 @@ import { useAuth } from '../helpers/auth';
 import Layout from '../components/Layout';
 import PageHeader from '../components/page-header';
 import NotesList from '../components/NotesList';
+import CreateNoteModal from '../components/CreateNoteModal';
 const Notes = () => {
 
     const {checkPermissions} = useAuth();
@@ -18,12 +19,13 @@ const Notes = () => {
                     </div>
                     <div className="col-sm-auto">
                         {
-                            checkPermissions('notes:create') && <button type="button" className="btn btn-success">Create note</button>
+                            checkPermissions('notes:create') && <button data-toggle="modal" data-target="#staticBackdrop" type="button" className="btn btn-success">Create note</button>
                         }
                     </div>
                 </div>
                 <NotesList/>
             </div>
+            <CreateNoteModal/>
         </Layout>
      ) : (
         <Layout>

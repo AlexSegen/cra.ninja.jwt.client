@@ -5,8 +5,11 @@ export const useAuth = () => {
 
   const checkPermissions = permission => auth.permissions.includes(permission);
 
+  const isAdmin  = auth.user && auth.user.role === "admin";
+
   return {
     ...auth,
+    isAdmin,
     checkPermissions
   };
 };

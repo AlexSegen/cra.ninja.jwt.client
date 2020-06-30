@@ -6,7 +6,6 @@ import api from '../../services/api.service';
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
-  
 
 const RestoreAccont = () => {
 

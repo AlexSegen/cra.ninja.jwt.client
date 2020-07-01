@@ -1,34 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import Layout from '../../components/Layout';
 import { Link, useLocation } from 'react-router-dom';
 import api from '../../services/api.service';
+import { restoreReducer } from './AuthReducers';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
+}
+
+const initialState = {
+  loading: false,
+  success: false,
+  validRecoveryToken: false,
+  error: null,
 }
 
 const RestoreAccont = () => {
 
     let query = useQuery();
 
+    const [state, dispatch] = useReducer(restoreReducer, initialState);
+
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [invalidPayload, setInvalidPayload] = useState(null);
+
+    const checkToken = () => {
+      dispatch({type: 'CHECK_RECOVERY_TOKEN'});
+      api.get('/auth/check-recovery-token?token=' + query.get("token")).then(()=> {
+        dispatch({type: 'VALID_RECOVERY_TOKEN'});
+      }).catch((error)=> {
+        dispatch({type: 'INVALID_RECOVERY_TOKEN', payload: error.response.data.message});
+      });
+    }
     
     const submit = () => {
-        setLoading(true);
-        api.post('/auth/reset-password?token=' + query.get("token"), { password }).then(()=> {
-          setLoading(false);
-          setSuccess(true);
-          setPassword('');
-          setConfirmPassword('');
-        }).catch((error)=> {
-          setError(error.response.data.message)
-          setLoading(false);
-        });
+      dispatch({type: 'NEW_PASSWORD_REQUEST'});
+      api.post('/auth/reset-password?token=' + query.get("token"), { password }).then(()=> {
+        dispatch({type: 'NEW_PASSWORD_SUCCESS'});
+        setPassword('');
+        setConfirmPassword('');
+      }).catch((error)=> {
+        dispatch({type: 'NEW_PASSWORD_FAILED', payload: error.response.data.message});
+      });
     }
     
     const handleSubmit = async (e) => {
@@ -36,8 +50,6 @@ const RestoreAccont = () => {
         e.preventDefault();
         
         setInvalidPayload(null);
-        setError(null)
-        setSuccess(false);
 
         if(!password || password.trim().length < 8) {
             setInvalidPayload('Your password must be at least 8 characters.');
@@ -51,6 +63,10 @@ const RestoreAccont = () => {
 
         submit();
     }
+
+    useEffect(() => {
+      checkToken();
+    }, [])
 
     return ( 
         <Layout>
@@ -75,34 +91,46 @@ const RestoreAccont = () => {
                         <small>Please, enter your new password.</small>
                       </div>
                       <form onSubmit={handleSubmit}>
-                        <div className="form-group mb-3">
-                          <div className="input-group input-group-alternative">
-                            <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
+                        {
+                          state.validRecoveryToken && (
+                          <>
+                            <div className="form-group mb-3">
+                              <div className="input-group input-group-alternative">
+                                <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input className="form-control" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value) } disabled={state.loading} value={password}/>
+                              </div>
                             </div>
-                            <input className="form-control" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value) } disabled={loading}/>
-                          </div>
-                        </div>
-                        <div className="form-group mb-3">
-                          <div className="input-group input-group-alternative">
-                            <div className="input-group-prepend">
-                            <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
+                            <div className="form-group mb-3">
+                              <div className="input-group input-group-alternative">
+                                <div className="input-group-prepend">
+                                <span className="input-group-text"><i className="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input className="form-control" type="password" name="confirmPassword" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value) } disabled={state.loading} value={confirmPassword}/>
+                              </div>
                             </div>
-                            <input className="form-control" type="password" name="confirmPassword" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value) } disabled={loading}/>
-                          </div>
-                        </div>
+                          </>)
+                        }
+
                         {
-                            success && <div className="alert text-success p1">Done! Your password has been updated.</div>
+                            state.success && <div className="alert alert-success text-center p-2">Done! Your password has been updated.</div>
                         }
                         {
-                            error && <div className="alert text-danger p1">{error}</div>
+                            state.error && <div className="alert text-danger text-center p-2">{state.error}</div>
                         }
                         {
-                            invalidPayload && <div className="alert text-danger p1">{invalidPayload}</div>
+                            invalidPayload && <div className="alert text-danger text-center p-2">{invalidPayload}</div>
                         }
-                        <div className="text-center">
-                          <button disabled={loading} type="submit" className="btn btn-primary my-4">Request Link</button>
-                        </div>
+
+                        {
+                          state.validRecoveryToken && (
+                            <div className="text-center">
+                              <button disabled={state.loading} type="submit" className="btn btn-primary my-4">UPDATE PASSWORD</button>
+                            </div>
+                          )
+                        }
+                        
                       </form>
                     </div>
                   </div>

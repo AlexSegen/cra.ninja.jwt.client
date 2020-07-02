@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { createNote } from '../store/actions/notes';
 
-const CreateNoteModal = ({note}) => {
+const CreateNoteModal = () => {
 
     const [newNote, setNewNote] = useState({});
 
     const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.notes);
+    const { note, loading, error } = useSelector(state => state.notes);
 
 
     const handleChange = e =>{
@@ -20,8 +20,8 @@ const CreateNoteModal = ({note}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(newNote);
         dispatch(createNote(newNote));
+        setNewNote(note);
     }
 
     return ( 

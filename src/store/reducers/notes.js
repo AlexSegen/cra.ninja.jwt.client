@@ -1,9 +1,13 @@
-import { NOTES_REQUEST, NOTES_SUCCESS, NOTES_FAILURE, CREATE_NOTE_SUCCESS, CREATE_NOTE_FAILURE } from "../actions/notes"
+import { NOTES_REQUEST, NOTES_SUCCESS, NOTES_FAILURE, CREATE_NOTE_SUCCESS, CREATE_NOTE_FAILURE, DELETE_NOTE_SUCCESS, DELETE_NOTE_FAILURE } from "../actions/notes"
 
 const initialState = {
     loading: false,
     notes: [],
-    error: null
+    error: null,
+    note: {
+        title: "",
+        content: ""
+    }
 }
 
 export const notesReducer = (state = initialState, action) => {
@@ -35,6 +39,20 @@ export const notesReducer = (state = initialState, action) => {
                 error: null
             }
         case CREATE_NOTE_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        case DELETE_NOTE_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                deleted: true,
+                notes: [...state.notes.filter(item => item._id !== action.payload)],
+                error: null
+            }
+        case DELETE_NOTE_FAILURE:
             return {
                 ...state,
                 loading: false,

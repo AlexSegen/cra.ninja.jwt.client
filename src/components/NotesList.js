@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getNotes } from '../store/actions/notes';
+import { getNotes, deleteNote } from '../store/actions/notes';
 import { useAuth } from '../helpers/auth';
 import { Link } from 'react-router-dom';
 import { timeAgo } from '../helpers/utils';
@@ -8,7 +8,7 @@ import { timeAgo } from '../helpers/utils';
 const NotesList = () => {
 
     const dispatch = useDispatch();
-    const { loading, error, notes } = useSelector(state => state.notes);
+    const { loading, error, notes, deleted } = useSelector(state => state.notes);
     const {checkPermissions} = useAuth();
 
     useEffect(() =>{
@@ -52,7 +52,7 @@ const NotesList = () => {
                         }
 
                         {
-                            checkPermissions('notes:delete') && <button type="button" className="btn btn-default btn-sm text-danger">Delete</button>
+                            checkPermissions('notes:delete') && <button type="button" onClick={()=> dispatch(deleteNote(note))} className="btn btn-default btn-sm text-danger">Delete</button>
                         }
                     </td>
                 </tr>

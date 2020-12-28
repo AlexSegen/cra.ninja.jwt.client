@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -20,11 +20,9 @@ if (TokenService.getToken()) {
 
 ReactDOM.render(
     <React.StrictMode>
-      <Suspense fallback={'Cargando...'}>
       <Provider store={store}>
         <App />
       </Provider>
-      </Suspense>
     </React.StrictMode>,
   document.getElementById('root')
 );

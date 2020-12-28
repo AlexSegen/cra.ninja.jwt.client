@@ -1,50 +1,52 @@
-import React, {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { createNote } from '../store/actions/notes';
+import React, { useContext } from 'react'
+import { NotesContext } from '../context/NotesContext';
 
 const CreateNoteModal = () => {
 
-    const [newNote, setNewNote] = useState({});
-
-    const dispatch = useDispatch();
-    const { note, loading, error } = useSelector(state => state.notes);
-
+    const { SetNote, setNote, note, loading, error } = useContext(NotesContext);
 
     const handleChange = e =>{
-        const value = e.target.value;
-        setNewNote({
-          ...newNote,
-          [e.target.name]: value
+        const {value, name} = e.target;
+        setNote({
+          ...note,
+          [name]: value
         });
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(createNote(newNote));
-        setNewNote(note);
+        SetNote(note)
     }
+
 
     return ( 
         <div className="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabIndex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <form  onSubmit={handleSubmit} className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="staticBackdropLabel">Create Note</h5>
+                        <h5 className="modal-title" id="staticBackdropLabel">{ note._id ? 'Update Note' : 'Create Note'  }</h5>
                         <button disabled={loading} type="button" className="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div className="modal-body">
                         <div className="form-group" >
-                            <input type="text" className="form-control" name="title" onChange={handleChange}  value={newNote.title} placeholder="Title"/>
+                            <input type="text" className="form-control" name="title" onChange={handleChange}  value={note.title} placeholder="Title"/>
                         </div>
                         <div className="form-group" >
-                            <textarea className="form-control" name="content" onChange={handleChange}  value={newNote.content} placeholder="Content">
+                            <textarea className="form-control" name="content" onChange={handleChange}  value={note.content} placeholder="Content">
 
                             </textarea>
                         </div>
                         {
                             error && <div className="alert text-danger text-center p-2">{error}</div>
+                        }
+
+                        {
+                            note._id && 
+                            <div> 
+                                <p>Created by: <span className="text-muted">{`${note.user.first_name} ${note.user.last_name}`}</span></p>
+                            </div>
                         }
                     </div>
                     <div className="modal-footer">

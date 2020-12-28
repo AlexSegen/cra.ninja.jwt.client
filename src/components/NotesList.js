@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getNotes, deleteNote } from '../store/actions/notes';
+import React, { useEffect, useContext } from 'react';
 import { useAuth } from '../helpers/auth';
-import { Link } from 'react-router-dom';
 import { timeAgo } from '../helpers/utils';
+import { NotesContext } from '../context/NotesContext';
 
 const NotesList = () => {
 
-    const dispatch = useDispatch();
-    const { loading, error, notes, deleted } = useSelector(state => state.notes);
-    const {checkPermissions} = useAuth();
+    const { GetNotes, DeleteNote, setNote, loading, error, notes  } = useContext(NotesContext);
+    const {checkPermissions, isAdmin, user } = useAuth();
+
+    const grantAction = (rule, author) => {
+        return (checkPermissions(rule) && author._id === user._id) || isAdmin
+    }
 
     useEffect(() =>{
-        dispatch(getNotes())
+        GetNotes()
     }, []);
-
 
     return notes && notes.length > 0 ? (
     <>
@@ -48,11 +48,11 @@ const NotesList = () => {
                     <td>{timeAgo(note.createdAt)}</td>
                     <td>
                         {
-                            checkPermissions('notes:update') && <Link to={"/notes/"+note._id} className="btn btn-default btn-sm text-info">Edit</Link>
+                            grantAction('notes:update', note.user) && <button onClick={()=> setNote(note)} data-toggle="modal" data-target="#staticBackdrop" type="button" className="btn btn-default btn-sm text-info">Edit</button>
                         }
 
                         {
-                            checkPermissions('notes:delete') && <button type="button" onClick={()=> dispatch(deleteNote(note))} className="btn btn-default btn-sm text-danger">Delete</button>
+                            grantAction('notes:delete', note.user) && <button type="button" onClick={()=> DeleteNote(note)} className="btn btn-default btn-sm text-danger">Delete</button>
                         }
                     </td>
                 </tr>

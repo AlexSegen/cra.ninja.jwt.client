@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from 'react-redux'
+import { SetUser } from "./services/storage.service";
+import { useAuth } from './helpers/auth';
 
 import {
   BrowserRouter as Router,
@@ -34,7 +36,7 @@ const MainRouter = () => {
           <Route exact path="/">
             <Home />
           </Route>
-          <PrivateRoute path="/notes">
+          <PrivateRoute rule="notes:read" path="/notes">
             <Notes />
           </PrivateRoute>
           <AdminRoute path="/admin/users">
@@ -69,12 +71,14 @@ const MainRouter = () => {
 function PrivateRoute({ children, ...rest }) {
   
   const { isAuthenticated } = useSelector(state => state.auth);
+
+  const {checkPermissions, isAdmin} = useAuth();
   
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuthenticated ? (
+        (isAuthenticated && (rest.rule ? checkPermissions(rest.rule) : true)) || isAdmin ? (
           children
         ) : (
           <Redirect
@@ -91,13 +95,15 @@ function PrivateRoute({ children, ...rest }) {
 
 function AdminRoute({ children, ...rest }) {
   
-  const { isAuthenticated, user } = useSelector(state => state.auth);
+  const { isAuthenticated } = useSelector(state => state.auth);
+
+  const { isAdmin } = useAuth();
   
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isAuthenticated && user.role === "admin" ? (
+        isAuthenticated && isAdmin ? (
           children
         ) : (
           <Redirect

@@ -37,8 +37,15 @@ const TokenService = {
 
 const SetUser = {
     getUser() {
-        let user = localStorage.getItem(USER);
-        return JSON.parse(user)
+        try {
+            let user = localStorage.getItem(USER);
+            return JSON.parse(user)
+        } catch (error) {
+            console.error('error', error.message)
+            return {
+                first_name: ""
+            }
+        }
     },
     isAdmin(){
         let user = this.getUser();
@@ -58,15 +65,16 @@ const SetUser = {
             return [];
         
         const splitted = token.split('.');
-    
-        const item = splitted.length > 0 ? splitted[1] : null;
 
+        
+        const item = splitted.length > 0 ? splitted[1] : null;
+        
         if(!item)
-            return [];
+        return [];
         
         const decoded = JSON.parse(atob(item));
     
-        return decoded.permissions;
+        return decoded;
     
     }
 }

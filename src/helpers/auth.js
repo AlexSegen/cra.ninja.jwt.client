@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
-
+import { SetUser } from "../services/storage.service";
 export const useAuth = () => {
   const auth = useSelector(state => state.auth);
 
-  const checkPermissions = permission => auth.permissions.includes(permission);
+  const tokenData = SetUser.getPermissions();
 
-  const isAdmin  = auth.user && auth.user.role === "admin";
+  const checkPermissions = permission => tokenData.permissions.includes(permission);
+
+  const isAdmin = tokenData.role === "admin";
 
   return {
     ...auth,

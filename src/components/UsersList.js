@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../store/actions/users';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 import { timeAgo } from '../helpers/utils';
 import UserModal from './ModalContent';
+
+import { UsersContext } from '../context/UsersContext';
 
 const UsersList = () => {
 
     const [selectedUser, setSelectedUser] = useState(null);
-    const dispatch = useDispatch();
-    const { loading, error, users } = useSelector(state => state.users);
+    const { GetUsers, loading, error, users } = useContext(UsersContext);
 
     useEffect(() =>{
-        dispatch(getUsers())
+        GetUsers()
     }, []);
 
     return <>
@@ -48,8 +46,6 @@ const UsersList = () => {
                     <td>{user.role}</td>
                     <td>{timeAgo(user.createdAt)}</td>
                     <td>
-                        {/* <Link to={"/users/"+user._id} className="btn btn-default btn-sm text-info">Edit</Link> */}
-                        
                         <button type="button" onClick={()=> setSelectedUser(user)} className="btn btn-default btn-sm text-info" data-toggle="modal" data-target="#staticBackdrop">Edit</button>
                         <button type="button" className="btn btn-default btn-sm text-danger">Delete</button>
                     </td>

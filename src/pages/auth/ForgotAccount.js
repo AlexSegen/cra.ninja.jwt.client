@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useReducer } from 'react';
 import validators from '../../helpers/validators';
 import Layout from '../../components/Layout';
 import { Link } from 'react-router-dom';

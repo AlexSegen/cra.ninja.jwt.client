@@ -1,7 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import modules from '../helpers/permissions';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUser } from '../store/actions/users';
+import { UsersContext } from '../context/UsersContext';
 
 const ModalContent = ({permissions, onToggle}) => {
 
@@ -53,8 +52,7 @@ const UserModal = ({user}) => {
 
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const dispatch = useDispatch();
-    const { loading, error } = useSelector(state => state.users);
+    const { UpdateUser, loading, error } = useContext(UsersContext);
 
     const handleToggle = val => {
         setSelectedUser({
@@ -66,7 +64,7 @@ const UserModal = ({user}) => {
     }
 
     const savePermissions = () => {
-        dispatch(updateUser(selectedUser))
+        UpdateUser(selectedUser)
     }
 
     useEffect(()=> {

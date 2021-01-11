@@ -9,7 +9,7 @@ const NotesList = () => {
     const {checkPermissions, isAdmin, user } = useAuth();
 
     const grantAction = (rule, author) => {
-        return (checkPermissions(rule) && author._id === user._id) || isAdmin
+        return ((checkPermissions(rule) && author) && author._id === user._id) || isAdmin
     }
 
     useEffect(() =>{

@@ -5,12 +5,12 @@ export const UsersContext = createContext();
 
 const UsersContextProvider = ({ children }) => {
 
-    const [users, setUsers] = useState([]);
-	const [user, setUser] = useState({ id: null, title: "", description: ""});
+	const [users, setUsers] = useState([]);
+	const [user, setUser] = useState({ id: null, title: "", description: "" });
 
 	const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    
+	const [error, setError] = useState(null);
+
 	const GetUsers = () => {
 
 		setLoading(true);
@@ -32,21 +32,21 @@ const UsersContextProvider = ({ children }) => {
 			setError(err.message);
 
 		});
-    }
-    
+	}
 
-    const UpdateUser = (user) => {
-        setLoading(true);
-        
-        const { first_name, last_name, avatar, email,  permissions, role } = user;
 
-        ApiService.put('/admin/users/' + user._id, { first_name, last_name, avatar, email,  permissions, role }).then(response => {
-            
-          setUser(response.data);
-          setLoading(false);
-    
-        }).catch(err => {
-            setLoading(false);
+	const UpdateUser = (user) => {
+		setLoading(true);
+
+		const { first_name, last_name, avatar, email, permissions, role } = user;
+
+		ApiService.put('/admin/users/' + user._id, { first_name, last_name, avatar, email, permissions, role }).then(response => {
+
+			setUser(response.data);
+			setLoading(false);
+
+		}).catch(err => {
+			setLoading(false);
 			setUsers([]);
 
 			if (err.response) {
@@ -55,11 +55,11 @@ const UsersContextProvider = ({ children }) => {
 			}
 
 			setError(err.message);
-        });
-    
-    }
+		});
 
-    return (
+	}
+
+	return (
 		<UsersContext.Provider value={{ GetUsers, UpdateUser, user, users, loading, error }}>
 			{children}
 		</UsersContext.Provider>

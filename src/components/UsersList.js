@@ -11,6 +11,7 @@ const UsersList = () => {
 
     useEffect(() =>{
         GetUsers()
+
     }, []);
 
     return <>

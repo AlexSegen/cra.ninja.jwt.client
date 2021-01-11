@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react'
-import modules from '../helpers/permissions';
 import { UsersContext } from '../context/UsersContext';
+import modules from '../helpers/permissions';
 
 const ModalContent = ({permissions, onToggle}) => {
 

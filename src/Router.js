@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from 'react-redux'
-import { SetUser } from "./services/storage.service";
 import { useAuth } from './helpers/auth';
 
 import {

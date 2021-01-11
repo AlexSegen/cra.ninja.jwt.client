@@ -4,7 +4,7 @@ import { useAuth } from '../helpers/auth';
 
 const Profile = () => {
 
-    const {checkPermissions, user, isAuthenticated} = useAuth();
+    const { user, isAdmin} = useAuth();
     
     return ( 
         <Layout>
@@ -40,7 +40,7 @@ const Profile = () => {
                         </div>
                         <div className="text-center mt-5">
                         <h3>{user.first_name} {user.last_name}<span className="font-weight-light">, 27</span></h3>
-                        <div className="h6 font-weight-300"><i className="ni location_pin mr-2"></i>{ user.role}</div>
+                        <div className="h6 font-weight-300"><i className="ni location_pin mr-2"></i>{ isAdmin ? 'Admin' : 'User'}</div>
                         <div className="h6 mt-4"><i className="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer</div>
                         <div><i className="ni education_hat mr-2"></i>University of Computer Science</div>
                         </div>

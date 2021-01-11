@@ -11,6 +11,7 @@ export const useAuth = () => {
 
   return {
     ...auth,
+    permissions: tokenData.permissions,
     isAdmin,
     checkPermissions
   };

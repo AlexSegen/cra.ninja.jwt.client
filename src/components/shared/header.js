@@ -19,7 +19,7 @@ const Header = () => {
         <nav id="navbar-main" className="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom">
         <div className="container">
           <Link className="navbar-brand mr-lg-5" to="/">
-            <img src="/img/brand/white.png" alt="Logo"/>
+            <img src="/assets/img/brand/blue.png" alt="Logo"/>
           </Link>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

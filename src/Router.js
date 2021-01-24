@@ -22,6 +22,9 @@ import Notes from "./pages/Notes";
 import Users from "./pages/Users";
 import RestoreAccont from "./pages/auth/RestoreAccont";
 
+
+import DashboardHome from './pages/dashboard/Home';
+
 const MainRouter = () => {
   return (
     <Router>
@@ -47,6 +50,11 @@ const MainRouter = () => {
           <PrivateRoute path="/profile">
             <Profile />
           </PrivateRoute>
+
+          <PrivateRoute path="/dashboard">
+            <DashboardHome />
+          </PrivateRoute>
+
           <NoAuthOnlyRoute path="/login">
             <Login />
           </NoAuthOnlyRoute>
